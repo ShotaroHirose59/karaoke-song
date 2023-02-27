@@ -24,7 +24,7 @@ const Home: NextPage = () => {
   return (
     <Layout title="Karaoke Song">
       <Image
-        src={session?.user?.image}
+        src={session?.user?.image || '/favicon.ico'}
         alt="Picture of the author"
         width={80}
         height={80}
@@ -41,12 +41,14 @@ const Home: NextPage = () => {
       </div>
       <div className="my-8">
         <span className="h-8 w-16 my-2 mx-2 cursor-pointer text-blue-600" onClick={() => signOut()}>ログアウト</span>
-        <span
-          className="h-8 w-16 my-2 mx-2 cursor-pointer text-red-600"
-          onClick={() => deleteUserMutation.mutate({ userId })}
-        >
-          アカウント削除
+        {userId && (
+          <span
+            className="h-8 w-16 my-2 mx-2 cursor-pointer text-red-600"
+            onClick={() => deleteUserMutation.mutate({ userId })}
+          >
+            アカウント削除
         </span>
+        )}
         {deleteUserMutation.isLoading && (
           <div className="text-center">
             <LoadingMessasge message="削除中" />
