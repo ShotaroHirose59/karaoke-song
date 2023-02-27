@@ -1,0 +1,21 @@
+import { z } from "zod";
+
+// zodで入力値のバリデーション
+export const createSongSchema = z.object({
+  name: z.string().min(1).max(20),
+  songKey: z.string()
+})
+
+export type createSongInput = z.TypeOf<typeof createSongSchema>
+
+export const updateSongSchema = z.object({
+  songId: z.string().cuid(),
+  name: z.string().min(1).max(20),
+  songKey: z.string()
+})
+
+export type updateSongInput = z.TypeOf<typeof updateSongSchema>
+
+export const deleteSongSchema = z.object({
+  songId: z.string().cuid()
+})
