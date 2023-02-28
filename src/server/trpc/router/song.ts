@@ -35,7 +35,7 @@ export const songRouter = t.router({
   updateSong: authedProcedure
     .input(updateSongSchema)
     .mutation(async ({ ctx, input }) => {
-      const task = await ctx.prisma.song.update({
+      const song = await ctx.prisma.song.update({
         where: {
           id: input.songId
         },
@@ -44,7 +44,7 @@ export const songRouter = t.router({
           songKey: input.songKey,
         }
       })
-      return task
+      return song
     }),
   deleteSong: authedProcedure
     .input(deleteSongSchema)
