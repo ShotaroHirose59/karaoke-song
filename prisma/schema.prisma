@@ -22,6 +22,16 @@ model Song {
     updatedAt DateTime @updatedAt
     user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId    String
+    likes     Like[]
+}
+
+model Like {
+    id     String @unique @default(cuid())
+    user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
+    song   Song @relation(fields: [songId], references: [id], onDelete: Cascade)
+    songId String
+    @@unique([userId, songId])
 }
 
 // Necessary for Next auth
@@ -60,6 +70,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     songs         Song[]
+    likes         Like[]
 }
 
 model VerificationToken {

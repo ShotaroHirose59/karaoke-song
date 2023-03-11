@@ -6,6 +6,8 @@ export const useMutateSong = () => {
   const utils = trpc.useContext()
   // Songのキャッシュ
   const previousSongs = utils.song.getSongs.getData()
+  const previousLikeSongs = utils.song.getLikeSongs.getData()
+  const { editedSong } = useSongStore()
   const reset = useSongStore((state) => state.resetEditedSong)
 
   // サーバーサイドの関数をremote procedure callで直接呼び出す
@@ -14,7 +16,7 @@ export const useMutateSong = () => {
     onSuccess: (res) => {
       // 既存のSongが存在する場合はキャッシュを更新
       if (previousSongs) {
-        utils.song.getSongs.setData([res, ...previousSongs])
+        utils.song.getSongs.setData([...previousSongs, res])
       }
       reset()
     }
@@ -22,10 +24,13 @@ export const useMutateSong = () => {
 
   const updateSongMutation = trpc.song.updateSong.useMutation({
     onSuccess: (res) => {
-      if (previousSongs) {
+      if (previousSongs && previousLikeSongs) {
         // 更新したタスクのIDに一致するオブジェクトだけ更新後のオブジェクトで置き換える
         utils.song.getSongs.setData(
           previousSongs.map((song) => (song.id === res.id ? res : song))
+        )
+        utils.song.getLikeSongs.setData(
+          previousLikeSongs.map((song) => (song.id === res.id ? res : song))
         )
         reset()
       }
@@ -36,11 +41,15 @@ export const useMutateSong = () => {
     // 第1引数は関数の返り値
     // 第2引数は関数に渡されたinputの引数の値
     onSuccess: (_, variables) => {
-      if (previousSongs) {
+      if (previousSongs && previousLikeSongs) {
         utils.song.getSongs.setData(
           previousSongs.filter((song) => song.id !== variables.songId)
         )
+        utils.song.getLikeSongs.setData(
+          previousLikeSongs.filter((song) => song.id !== variables.songId)
+        )
       }
+      if (editedSong.songId == variables.songId) reset()
     }
   })
 

@@ -1,8 +1,12 @@
+import { useSongStore } from "../../store/song"
 import { trpc } from "../../utils/trpc"
 import { SongItem } from "./Item"
+import { SongTabs } from "./Tabs"
 
 export function SongList() {
-  const { data, isLoading, error } = trpc.song.getSongs.useQuery()
+  const { data: songs, isLoading, error } = trpc.song.getSongs.useQuery()
+  const { data: likeSongs } = trpc.song.getLikeSongs.useQuery()
+  const { activeTab } = useSongStore()
 
   if (isLoading) {
     return <p>Loading song list...</p>
@@ -11,15 +15,35 @@ export function SongList() {
     return <p>{error.message}</p>
   }
   return (
-    <ul>
-      {data?.map((song) => (
-        <SongItem
-          key={song.id}
-          songId={song.id}
-          name={song.name}
-          songKey={song.songKey}
-        />
-      ))}
-    </ul>
+    <>
+      <SongTabs />
+      {activeTab === 'like' ?
+        <>
+          <ul>
+            {likeSongs?.map((song) => (
+              <SongItem
+                key={song.id}
+                songId={song.id}
+                name={song.name}
+                songKey={song.songKey}
+              />
+            ))}
+          </ul>
+        </>
+        :
+        <>
+          <ul>
+            {songs?.map((song) => (
+              <SongItem
+                key={song.id}
+                songId={song.id}
+                name={song.name}
+                songKey={song.songKey}
+              />
+            ))}
+          </ul>
+        </>
+      }
+    </>
   )
 }

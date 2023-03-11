@@ -7,11 +7,13 @@ import { SongForm } from "../components/song/Form";
 import { SongList } from "../components/song/List";
 import { useMutateUser } from "../hooks/useMutateUser";
 import { LoadingMessasge } from "../components/LoadingMessage";
+import { useSongStore } from "../store/song";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
   const userId = session?.user?.id
   const { deleteUserMutation } = useMutateUser()
+  const { activeTab } = useSongStore()
 
   if (!session) {
     return (
@@ -36,9 +38,11 @@ const Home: NextPage = () => {
       <div className="my-8">
         <SongList />
       </div>
-      <div className="my-8">
-        <SongForm />
-      </div>
+      {activeTab === 'all' && (
+        <div className="my-8">
+          <SongForm />
+        </div>
+      )}
       <div className="my-8">
         <span className="h-8 w-16 my-2 mx-2 cursor-pointer text-blue-600" onClick={() => signOut()}>ログアウト</span>
         {userId && (

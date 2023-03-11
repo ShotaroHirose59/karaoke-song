@@ -5,6 +5,8 @@ type State = {
   editedSong: updateSongInput
   updateEditedSong: (payload:updateSongInput) => void
   resetEditedSong: () => void
+  activeTab: string
+  changeActiveTab: (payload:string) => void
 }
 
 export const useSongStore = create<State>((set) => ({
@@ -14,5 +16,9 @@ export const useSongStore = create<State>((set) => ({
   },
   resetEditedSong: () => {
     set({ editedSong: { songId: '', name: '', songKey: '±0' } })
+  },
+  activeTab: 'all',
+  changeActiveTab: (payload: string) => {
+    set({ activeTab: payload })
   }
 }))

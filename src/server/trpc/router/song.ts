@@ -26,9 +26,6 @@ export const songRouter = t.router({
     return ctx.prisma.song.findMany({
       where: {
         userId: ctx.session?.user?.id
-      },
-      orderBy: {
-        createdAt: 'desc'
       }
     })
   }),
@@ -54,5 +51,19 @@ export const songRouter = t.router({
           id: input.songId
         }
       })
+    }),
+  getLikeSongs: t.procedure.query(({ ctx }) => {
+    return ctx.prisma.song.findMany({
+      where: {
+        likes: {
+          some: {
+            userId: ctx.session?.user?.id
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'asc'
+      }
     })
+  })
 })
