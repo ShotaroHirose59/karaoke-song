@@ -36,21 +36,17 @@ export function LikeIcons(props: Props) {
 
   return (
     <>
-      {!createLikeMutation.isLoading && (
-        <>
-          {isLliked() ?
-            <LikeIcon
-              style="w-5 mt-1 cursor-pointer text-red-400"
-              handleClick={() => clickRemoveLike(songId)}
-            />
-            :
-            <LikeIcon
-              style="w-5 mt-1 cursor-pointer text-gray-400"
-              handleClick={() => clickLike(songId)}
-            />
-          }
-        </>
-      )}
+      {isLliked() ?
+        <LikeIcon
+          style="w-5 mt-1 cursor-pointer text-red-400"
+          handleClick={() => clickRemoveLike(songId)}
+        />
+        :
+        <LikeIcon
+          style="w-5 mt-1 cursor-pointer text-gray-400"
+          handleClick={() => clickLike(songId)}
+        />
+      }
     </>
   )
 }
