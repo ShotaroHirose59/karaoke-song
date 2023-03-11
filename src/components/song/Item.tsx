@@ -12,7 +12,7 @@ export function SongItem(props: updateSongInput) {
   const { deleteSongMutation } = useMutateSong()
 
   return (
-    <li>
+    <li className="flex">
       <div className="float-left flex mr-4">
         <LikeIcons songId={songId} />
       </div>
