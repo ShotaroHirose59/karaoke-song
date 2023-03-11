@@ -13,14 +13,14 @@ export function SongItem(props: updateSongInput) {
 
   return (
     <li className="flex">
-      <div className="float-left flex mr-4">
+      <div className="mr-4">
         <LikeIcons songId={songId} />
       </div>
       <span>{name}</span>
       <span className="ml-4">{songKey}</span>
       {activeTab === 'all' && (
         <>
-          <div className="float-right ml-8 flex">
+          <div className="ml-4 flex">
             <PencilIcon
               className="mx-1 h-5 w-5 cursor-pointer text-indigo-600"
               onClick={() => {
