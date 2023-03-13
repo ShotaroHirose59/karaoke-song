@@ -19,11 +19,12 @@ export const likeRouter = t.router({
   deleteLike: authedProcedure
     .input(deleteLikeSchema)
     .mutation(async ({ctx, input}) => {
-      // TODO deleteにする
-      return await ctx.prisma.like.deleteMany({
+      return await ctx.prisma.like.delete({
         where: {
-          userId: input.userId,
-          songId: input.songId
+          userId_songId: {
+            userId: input.userId,
+            songId: input.songId
+          }
         }
       })
     })
