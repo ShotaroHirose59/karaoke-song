@@ -6,7 +6,7 @@ import { LoadingMessasge } from '../LoadingMessage'
 import { LikeIcons } from './LikeIcons'
 
 export function SongItem(props: updateSongInput) {
-  const { songId, name, songKey } = props
+  const { songId, name, songKey, highNoteDifficulty } = props
   const { activeTab } = useSongStore()
   const update = useSongStore((state) => state.updateEditedSong)
   const { deleteSongMutation } = useMutateSong()
@@ -24,7 +24,7 @@ export function SongItem(props: updateSongInput) {
             <PencilIcon
               className="mx-1 h-5 w-5 cursor-pointer text-indigo-600"
               onClick={() => {
-                update({ songId, name, songKey })
+                update({ songId, name, songKey, highNoteDifficulty })
               }}
             />
             <TrashIcon

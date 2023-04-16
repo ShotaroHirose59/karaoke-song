@@ -22,12 +22,17 @@ export const songRouter = t.router({
       return song
     }),
   // 取得はt.procedure.query
+  // getSongs: t.procedure.query(({ ctx }) => {
+  //   return ctx.prisma.song.findMany({
+  //     where: {
+  //       userId: ctx.session?.user?.id
+  //     }
+  //   })
+  // }),
   getSongs: t.procedure.query(({ ctx }) => {
-    return ctx.prisma.song.findMany({
-      where: {
-        userId: ctx.session?.user?.id
-      }
-    })
+    return ctx.prisma.user.findUnique({
+      where: { id: ctx.session?.user?.id }
+    }).songs()
   }),
   updateSong: authedProcedure
     .input(updateSongSchema)
@@ -39,6 +44,7 @@ export const songRouter = t.router({
         data: {
           name: input.name,
           songKey: input.songKey,
+          highNoteDifficulty: input.highNoteDifficulty
         }
       })
       return song

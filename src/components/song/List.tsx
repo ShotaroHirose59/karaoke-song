@@ -26,6 +26,7 @@ export function SongList() {
                 songId={song.id}
                 name={song.name}
                 songKey={song.songKey}
+                highNoteDifficulty={song.highNoteDifficulty}
               />
             ))}
           </ul>
@@ -39,6 +40,7 @@ export function SongList() {
                 songId={song.id}
                 name={song.name}
                 songKey={song.songKey}
+                highNoteDifficulty={song.highNoteDifficulty}
               />
             ))}
           </ul>
