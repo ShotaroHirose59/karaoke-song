@@ -35,10 +35,9 @@ export function SongForm() {
   const DEFAULT_SONG_KEY = '±0'
 
   const highNoteDifficultyLabels = {
-    EASY: '余裕',
     MODERATE: 'いける',
     CHALLENGING: 'ギリいける',
-    EXTREME: '無理',
+    EXTREME: 'きつい',
   }
   const DEFAULT_HIGHT_NOTE_DiffiCULTY_LABEL = 'いける'
 
